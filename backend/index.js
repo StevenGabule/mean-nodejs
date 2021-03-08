@@ -9,6 +9,8 @@ const productsRouter = require("./routers/products");
 const categoriesRouter = require("./routers/categories");
 const usersRouter = require("./routers/users");
 const ordersRouter = require("./routers/orders");
+const authJWT = require("./helpers/jwt");
+const errorHandler = require("./helpers/errorHandler");
 
 const api = process.env.API_URL;
 const port = process.env.PORT;
@@ -18,6 +20,10 @@ app.options("*", cors());
 
 app.use(express.json());
 app.use(morgan("tiny"));
+
+app.use(authJWT());
+app.use(errorHandler);
+
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoriesRouter);
 app.use(`${api}/users`, usersRouter);
